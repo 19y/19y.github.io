@@ -9,6 +9,8 @@
 <script type="text/javascript" src="resource/full.js"></script>
 <title>xiaoRe</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 <style type="text/css">
 li {
 	list-style-type: none;
@@ -141,7 +143,21 @@ li {
 		<nav class="navbar navbar-light bg-light"  >
 			<span class="navbar-brand mb-0 h1" style="padding-left: 45%" ><a href="20.html" >第二十单元</a></span>
 		</nav>
+		
+		<div id="gitalk-container"></div>
 	</div>
+	<script>
+		var gitalk = new Gitalk({
+                clientID: '960696b407ce0fa11892', ///步骤3创建后得到的
+                clientSecret: '643672972c975aa6dde9b592cb21660278e2be61',///步骤3创建后得到的
+                repo: '19ybook',///步骤4创建的库名
+                owner: '19y',//自己的GitHub用户名
+                admin: ['19y'],//自己的GitHub用户名
+                id: '{{xiaoRe}}', // 唯一标示，一般是文章id也可以是文章url
+                distractionFreeMode: false  // Facebook-like distraction free mode
+            })
+            gitalk.render('gitalk-container')
+	</script>
 
 
 	<div class="rightBottom">
