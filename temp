@@ -1,0 +1,290 @@
+ 在linux系统下完成以下操作
+0.采用xshell进行连接到linux系统，采用管理员账号登录
+
+1.创建1612C组，指定组的id为344
+
+groupadd -og 344 1612C
+
+2.检查是否创建成功，在组的配置文件中查看
+
+cat /etc/group
+
+3.创建两个用户chj,chjx,他们的组都是1612C
+
+useradd -g 1612C chj
+
+useradd -g 1612C chjx
+
+4.在/home下创建hello.txt文件。
+> /home/hello.txt
+
+
+5.将/home/hello.txt复制到/var/tmp目录下，并命名为hellos.txt。
+cp /home/hello.txt /var/tmp/hellos.txt
+
+6.在/home目录下创建hello.txt的软连接文件hellos.txt.soft.link。
+
+ln -s hello.txt hellos.txt.soft.link
+
+7.列出/home目录下的所有后缀为txt的文件的详细信息。
+find /home -name *.txt
+
+8.在/var/tmp目录下创建hellos.txt的硬链接文件bbb.link。
+
+ln /var/tmp/hellos.txt /var/tmp/bbb.link
+
+9.列出/var/tmp目录下的所有文件和目录的详细信息。
+
+ll -a
+
+10.设置home/hello.txt文件chj可以读写，chjx不能做任何操作，其他用户可读。
+
+设置文件属主为chj 
+chown chj hello.txt
+设置文件属组为 1612C
+chgrp 1612C hello.txt
+
+设置属主 可读写执行   属组无权限  其他可读
+chmod u=wxr,g=,o=r hello.txt
+
+su chj
+检查
+su chjx 
+检查 
+
+11.更换用户登陆，检查是否成功。
+su chj
+su chjx
+
+12.在/var/tmp目录下创建c.txt，用vim打开c.txt并设置行号。
+
+> /var/tmp/c.txt
+
+vim /var/tmp/c.txt
+i
+data
+
+:set nu
+
+13.把光标移动到第10行，输入“Hello World”。
+
+10G
+i
+Hello World
+
+
+14.移动到c.txt文件的最后一行，输入“One”。
+G
+i
+One
+
+15.把整个文件中所有的“One”替换成“Two”
+:1,$s/One/Two/g 
+
+
+16.还原上一步操作。
+u
+
+17.把光标移动到10行，在该行末尾输入“!”。
+10G
+A
+!
+18.删除第10行。
+10G
+dd
+
+19.在第一行下面插入新的一行，并输入“# Over”。
+gg
+o
+# Over
+
+
+20.保存文档并退出，显示文件所有的内容。
+ cat /var/tmp/c.txt 
+
+
+21.查看网络ip的命令
+ifconfig
+
+22.设置网络为静态ip，查看设置静态ip文件
+
+vim /etc/sysconfig/network-scripts/ifcfg-网卡名称
+
+　　这时候如果想修改成静态的，首先把BOOTPROTO="dhcp"改成BOOTPROTO="static"表示静态获取，然后在最后追加比如下面的配置：
+
+BROADCAST=192.168.1.255
+IPADDR=192.168.1.33
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+　　BROADCAST设置的是局域网广播地址，IPADDR就是静态IP，NETMASK是子网掩码，GATEWAY就是网关或者路由地址；需要说明，原来还有个NETWORK配置的是局域网网络号，这个是ifcalc自动计算的，所以这里配置这些就足够了，
+
+配置完成之后保存退出，
+
+　　设置完毕，然后使用命令： /etc/init.d/network restart 或者 service network restart 重启网络服务，重启后如果路由配置了支持静态IP，那么linux就能获取到刚才配置的IP地址，这样静态IP就配置成功了
+
+　　配置成功后，dns配置一般会消失，所以这时候就ping不通域名了，需要配置DNS，配置文件位置是：/etc/resolv.conf，里面的nameserver指定dns服务器地址，这个配置很简单就不详细说了，如下图：
+
+nameserver 114.114.114.114
+nameserver 8.8.8.8
+　保存后，dns配置是立即生效的，原因很简单，只要本地需要解析缓冲区没有的域名，都要读取一遍dns配置文件，所以这个配置是立即生效的，不用任何操作
+
+　　到这里静态IP并访问外网就没问题了
+查看设置静态ip文件
+cat /etc/sysconfig/network-scripts/ifcfg-网卡名称
+
+23.查看全局配置文件的环境变量配置
+
+cat /etc/profile
+
+
+
+
+24.关闭防火墙
+
+  防火墙  重新启动：service iptables restart
+                                  service iptables stop
+                                  service iptables start
+
+
+25.启动mysql服务
+
+service mysql start
+
+
+
+26.查看进程，过滤出mysql服务
+
+ps -ef|grep mysql
+
+
+27.杀死mysql进程
+
+kill -9 pid
+
+
+28.检测jdk环境变量是否成功 ，查看mysql的版本号
+
+java -version
+mysql --versiobn
+
+29.在桌面创建ab.txt,修改权限为-rwx-wx--x
+
+cd /用户名/Desktop
+> ab.txt
+
+chmod u=wxr,g=wx,o=x ab.txt
+
+30.删除创建的用户，要把/home的用户目录连带删除
+
+uerdel -r 用户名
+
+31.删除用户组
+
+groupdel 用户组
+
+32.删除创建的文件
+
+rm -rf 文件名
+
+33.启动mysql，把上个月的sql脚本导入到linux中的mysql中
+
+service mysql start
+
+
+mysql -u root -p
+
+ show databases;
+
+create database abc;
+
+use abc;
+
+set names utf8;
+
+source /root/Desktop/sql文件
+ok
+
+
+
+33.考试杜绝作弊，周末愉快！！！！
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ 在linux系统下完成以下操作
+1.	打开虚拟机，并用root账号登录Linux系统（5分）
+2.	创建zhoukao1用户组。（5分）
+Groupadd zhoukao1  
+3.	检查是否创建成功。（5分）
+Cat /etc/group
+4.	创建两个用户wang5、zhao6，他们的用户组都是zhoukao1。（5分）
+Useradd -g zhoukao1 wang5 
+Useradd -g zhoukao1 zhao6
+5.	为用户wang5、zhao6创建密码，密码都为123456。（5分）
+Passwd wang5
+Passwd zhao6
+6.	在/etc下创建aaa.txt文件。（5分）
+Touch /etc/aaa.txt
+7.	将/etc/aaa.txt复制到/var/tmp目录下，并重命名为bbb.txt。（5分）
+Cp /etc/aaa.txt /var/tmp/bbb.txt
+8.	列出/var/tmp目录下的所有文件和目录的详细信息。（5分）
+Ll
+
+9.	修改bbb.txt文件的权限，将其设置为wang5可以读写，zhao6不能做任何操作，其他用户可读。（5分）
+Chown bbb.txt wang5
+
+10.	更换用户登陆，检查上一步权限修改是否成功。（5分）
+Su wang5 
+Vim bbb.txt
+Insert data
+Wq
+Su zhao5
+Vim bbb.txt
+Insert data worrong
+Q!
+Cat bbb.txt
+
+11.	在/var/tmp目录下创建ccc.txt，用vim/vi打开ccc.txt并设置行号。（5分）
+Touch ccc.txt 
+:set nu
+
+12.	在ccc.txt文件中随意添加20行数据，并保存退出。（5分）
+I data
+Wq
+
+13.	再次打开ccc.txt文件，把光标移动到第10行，输入“Hello World”。（5分）
+Vim ccc.txt
+10G
+S|i
+Hello world
+14.	移动到ccc.txt文件的最后一行，输入“World”。（5分）
+G
+I|s
+World
+
+15.	把整个文件中所有的“World”替换成“Linux”。（5分）
+:1,$s/world/linux/g
+16.	使用指令还原上一步操作。（5分）
+u
+17.	把光标移动到8行，在该行末尾输入“!!!”。（5分）
+8G
+A
+Over
+
+18.	删除第7行数据。（5分）
+7G
+Dd
+
+19.	跳转到第一行，并在第一行下面插入新的一行，输入“over”。（5分）
+Gg
+O下一行 o上一行
+over
+20.	保存文档并退出，显示文件所有的内容。（5分）
+21.	:wq
+22.	Cat
+23.	More
+24.	
+
+
+
+
+tips：  百度菜鸟教程  在线练习 linux 
