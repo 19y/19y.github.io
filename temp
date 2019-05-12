@@ -1,3 +1,6 @@
+
+ 
+ 
  在linux系统下完成以下操作
 0.采用xshell进行连接到linux系统，采用管理员账号登录
 
@@ -213,52 +216,52 @@ ok
  在linux系统下完成以下操作
 1.	打开虚拟机，并用root账号登录Linux系统（5分）
 2.	创建zhoukao1用户组。（5分）
-Groupadd zhoukao1  
+groupadd zhoukao1  
 3.	检查是否创建成功。（5分）
-Cat /etc/group
+cat /etc/group
 4.	创建两个用户wang5、zhao6，他们的用户组都是zhoukao1。（5分）
-Useradd -g zhoukao1 wang5 
-Useradd -g zhoukao1 zhao6
+useradd -g zhoukao1 wang5 
+useradd -g zhoukao1 zhao6
 5.	为用户wang5、zhao6创建密码，密码都为123456。（5分）
-Passwd wang5
-Passwd zhao6
+passwd wang5
+passwd zhao6
 6.	在/etc下创建aaa.txt文件。（5分）
-Touch /etc/aaa.txt
+touch /etc/aaa.txt
 7.	将/etc/aaa.txt复制到/var/tmp目录下，并重命名为bbb.txt。（5分）
-Cp /etc/aaa.txt /var/tmp/bbb.txt
+cp /etc/aaa.txt /var/tmp/bbb.txt
 8.	列出/var/tmp目录下的所有文件和目录的详细信息。（5分）
-Ll
+ll
 
 9.	修改bbb.txt文件的权限，将其设置为wang5可以读写，zhao6不能做任何操作，其他用户可读。（5分）
-Chown bbb.txt wang5
+chown bbb.txt wang5
 
 10.	更换用户登陆，检查上一步权限修改是否成功。（5分）
-Su wang5 
-Vim bbb.txt
-Insert data
-Wq
-Su zhao5
-Vim bbb.txt
-Insert data worrong
-Q!
-Cat bbb.txt
+su wang5 
+vim bbb.txt
+insert data
+wq
+su zhao5
+vim bbb.txt
+insert data worrong
+q!
+cat bbb.txt
 
 11.	在/var/tmp目录下创建ccc.txt，用vim/vi打开ccc.txt并设置行号。（5分）
-Touch ccc.txt 
+touch ccc.txt 
 :set nu
 
 12.	在ccc.txt文件中随意添加20行数据，并保存退出。（5分）
-I data
-Wq
+i data
+wq
 
 13.	再次打开ccc.txt文件，把光标移动到第10行，输入“Hello World”。（5分）
-Vim ccc.txt
+vim ccc.txt
 10G
-S|i
+s|i
 Hello world
 14.	移动到ccc.txt文件的最后一行，输入“World”。（5分）
-G
-I|s
+g
+i|s
 World
 
 15.	把整个文件中所有的“World”替换成“Linux”。（5分）
@@ -268,20 +271,20 @@ u
 17.	把光标移动到8行，在该行末尾输入“!!!”。（5分）
 8G
 A
-Over
+over
 
 18.	删除第7行数据。（5分）
 7G
-Dd
+dd
 
 19.	跳转到第一行，并在第一行下面插入新的一行，输入“over”。（5分）
-Gg
+gg
 O下一行 o上一行
 over
 20.	保存文档并退出，显示文件所有的内容。（5分）
 21.	:wq
-22.	Cat
-23.	More
+22.	cat
+23.	more
 24.	
 
 
